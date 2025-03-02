@@ -1,5 +1,5 @@
 const express = require('express');
-const { spawn } = require('child_process');
+const { spawn, exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf'); // Use rimraf for synchronous directory removal
@@ -93,4 +93,15 @@ app.post('/compile', async (req, res) => {
 
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
+    
+    // Check if Java is installed and in PATH
+    exec('javac -version', (error, stdout, stderr) => {
+        if (error) {
+            console.error('⚠️ WARNING: Java compiler not found in PATH');
+            console.error('Error details:', error.message);
+            console.error('Make sure Java is installed and in the system PATH');
+        } else {
+            console.log('✅ Java compiler found:', stderr.trim() || stdout.trim());
+        }
+    });
 });
