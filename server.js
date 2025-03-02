@@ -3,6 +3,7 @@ const { spawn, exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf'); // Use rimraf for synchronous directory removal
+const { execSync } = require('child_process');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -91,17 +92,23 @@ app.post('/compile', async (req, res) => {
     }
 });
 
+// Add Java verification on startup
+const verifyJava = () => {
+  try {
+    const javaVersion = execSync('java -version 2>&1').toString();
+    const javacVersion = execSync('javac -version 2>&1').toString();
+    console.log('Java Runtime:', javaVersion);
+    console.log('Java Compiler:', javacVersion);
+    return true;
+  } catch (error) {
+    console.error('⚠️ Java verification failed:', error.message);
+    return false;
+  }
+};
+
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
-    
-    // Check if Java is installed and in PATH
-    exec('javac -version', (error, stdout, stderr) => {
-        if (error) {
-            console.error('⚠️ WARNING: Java compiler not found in PATH');
-            console.error('Error details:', error.message);
-            console.error('Make sure Java is installed and in the system PATH');
-        } else {
-            console.log('✅ Java compiler found:', stderr.trim() || stdout.trim());
-        }
-    });
+    if (!verifyJava()) {
+        console.error('⚠️ WARNING: Java is not properly configured');
+    }
 });

@@ -1,29 +1,29 @@
+# Use Node.js base image
 FROM node:18
 
-# Install OpenJDK and set environment variables
+# Install OpenJDK 11
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk && \
-    apt-get clean
-
-# Set JAVA_HOME and PATH explicitly
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH="${JAVA_HOME}/bin:${PATH}"
+    apt-get install -y openjdk-11-jdk && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Verify Java installation
-RUN javac -version && java -version
+RUN java -version && javac -version
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy package files
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Copy application files
+# Copy all files
 COPY . .
 
 # Expose port
 EXPOSE 3000
 
-# Start the app
-CMD ["node", "server.js"] 
+# Start command
+CMD ["npm", "start"]
