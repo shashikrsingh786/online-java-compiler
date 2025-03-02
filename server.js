@@ -97,16 +97,7 @@ const verifyJava = () => {
   try {
     console.log('Checking Java installation...', process.env.JAVA_HOME, process.env.PORT);
     
-    // Check Java version
-    const javaVersion = execSync('java -version 2>&1').toString();
-    console.log('Java Runtime:', javaVersion);
     
-    // Check Java compiler
-    const javacVersion = execSync('javac -version 2>&1').toString();
-    console.log('Java Compiler:', javacVersion);
-    
-    // Check JAVA_HOME
-    console.log('JAVA_HOME:', process.env.JAVA_HOME);
     
     return true;
   } catch (error) {
