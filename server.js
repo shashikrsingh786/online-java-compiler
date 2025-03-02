@@ -92,13 +92,22 @@ app.post('/compile', async (req, res) => {
     }
 });
 
-// Add Java verification on startup
+// Add this function for Java verification
 const verifyJava = () => {
   try {
+    console.log('Checking Java installation...');
+    
+    // Check Java version
     const javaVersion = execSync('java -version 2>&1').toString();
-    const javacVersion = execSync('javac -version 2>&1').toString();
     console.log('Java Runtime:', javaVersion);
+    
+    // Check Java compiler
+    const javacVersion = execSync('javac -version 2>&1').toString();
     console.log('Java Compiler:', javacVersion);
+    
+    // Check JAVA_HOME
+    console.log('JAVA_HOME:', process.env.JAVA_HOME);
+    
     return true;
   } catch (error) {
     console.error('⚠️ Java verification failed:', error.message);
@@ -106,9 +115,10 @@ const verifyJava = () => {
   }
 };
 
+// Modify your server.listen to include verification
 app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
-    if (!verifyJava()) {
-        console.error('⚠️ WARNING: Java is not properly configured');
-    }
+  console.log(`Server listening at http://localhost:${port}`);
+  if (!verifyJava()) {
+    console.error('⚠️ WARNING: Java is not properly configured');
+  }
 });
