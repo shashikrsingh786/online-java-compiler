@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Compiler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Fira+Code&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/lint/lint.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fab fa-java"></i>
+            <h1>Java Compiler</h1>
+        </div>
+        <div class="keyboard-shortcuts">
+            <span><kbd>Ctrl</kbd> + <kbd>Enter</kbd> Run</span>
+            <span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> Format</span>
+            <span><kbd>Ctrl</kbd> + <kbd>L</kbd> Clear</span>
+            <span><kbd>Ctrl</kbd> + <kbd>P</kbd> Print</span>
+            <span><kbd>Ctrl</kbd> + <kbd>/</kbd> Comment</span>
+        </div>
+    </header>
+    
+    <div class="main-container">
+        <div class="panel code-panel">
+            <div class="panel-header">
+                <h2><i class="fas fa-code"></i> Code Editor</h2>
+                <div class="editor-controls">
+                    <span id="status"><i class="fas fa-circle status-indicator"></i> Ready</span>
+                    <span id="line-col">Line: 1, Col: 1</span>
+                    
+                </div>
+            </div>
+            <textarea id="codeEditor"></textarea>
+            
+            <div class="action-buttons">
+                <button id="compileButton" class="primary-btn"><i class="fas fa-play"></i> Run</button>
+                <button id="formatButton" class="secondary-btn"><i class="fas fa-align-left"></i> Format</button>
+                <button id="clearButton" class="danger-btn"><i class="fas fa-trash"></i> Clear</button>
+            </div>
+        </div>
+        
+        <div class="panel output-panel">
+            <div class="panel-header">
+                <h2><i class="fas fa-terminal"></i> Output</h2>
+                <div class="metrics-display">
+                    <span id="execution-time" title="Execution time"><i class="fas fa-clock"></i> --ms</span>
+                    <span id="complexity-badge" class="hidden" title="Complexity Analysis">
+                        <i class="fas fa-chart-line"></i> <span id="complexity-text">O(n)</span>
+                    </span>
+                    <div id="complexity-loader" class="complexity-loader hidden">
+                        <div class="complexity-spinner"></div>
+                    </div>
+                </div>
+                <div class="output-controls">
+                    <button id="copyOutputBtn" class="icon-btn" title="Copy output">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button id="clearOutputBtn" class="icon-btn" title="Clear output">
+                        <i class="fas fa-eraser"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="output-container">
+                <div class="loader" id="loader"></div>
+                <pre id="output">// Your code output will appear here</pre>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Java Compiler &copy; 2025 | Built with <i class="fas fa-heart"></i> by Shashi Kumar Singh</p>
+    </footer>
+
+    <div class="ai-floating-button" id="aiFloatingBtn">
+        <div class="ai-icon">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="ai-options">
+            <button id="explainCodeBtn" class="ai-option-btn" title="Explain Code">
+                <i class="fas fa-book"></i>
+            </button>
+            <button id="suggestImprovementsBtn" class="ai-option-btn" title="Suggest Improvements">
+                <i class="fas fa-magic"></i>
+            </button>
+            <button id="debugHelpBtn" class="ai-option-btn" title="Debug Help">
+                <i class="fas fa-bug"></i>
+            </button>
+            <button id="generateExampleBtn" class="ai-option-btn" title="Generate Example">
+                <i class="fas fa-lightbulb"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="ai-modal" id="aiModal">
+        <div class="ai-modal-content">
+            <div class="ai-modal-header">
+                <h3 id="aiModalTitle">AI Assistant</h3>
+                <button id="aiModalClose" class="ai-modal-close">&times;</button>
+            </div>
+            <div class="ai-modal-body" id="aiModalBody">
+                <div class="ai-loading">
+                    <div class="ai-spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/anyword-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/lint/lint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/brace-fold.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/comment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+    <script src="java-hint.js"></script>
+    <script src="ai-assistant.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</body>
+</html>
