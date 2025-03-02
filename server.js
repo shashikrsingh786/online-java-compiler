@@ -95,7 +95,7 @@ app.post('/compile', async (req, res) => {
 // Add this function for Java verification
 const verifyJava = () => {
   try {
-    console.log('Checking Java installation...');
+    console.log('Checking Java installation...', process.env.JAVA_HOME, process.env.PORT);
     
     // Check Java version
     const javaVersion = execSync('java -version 2>&1').toString();
