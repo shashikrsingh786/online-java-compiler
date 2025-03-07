@@ -2,6 +2,7 @@ services:
   - type: web
     name: java-compiler
     env: docker
+    buildCommand: docker build -t java-compiler .
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -12,3 +13,4 @@ services:
       name: temp-files
       mountPath: /app/temp
       sizeGB: 1
+      type: tmpfs  # Store temp files in RAM for speed

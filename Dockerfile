@@ -4,10 +4,10 @@ FROM ubuntu:22.04
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Node.js and Java
+# Install Node.js 18 and Java (Optimized for speed)
 RUN apt-get update && \
     apt-get install -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs openjdk-17-jdk && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -24,16 +24,14 @@ ENV PATH="${JAVA_HOME}/bin:${PATH}"
 # Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy package files (Optimized npm install)
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install
+RUN npm ci --only=production  # Faster than npm install
 
 # Copy all files
 COPY . .
 
-# Create temp directory for Java compilation
+# Create a temp directory in memory (RAM) for fast compilation
 RUN mkdir -p /app/temp
 
 # Set permissions
