@@ -30,7 +30,9 @@ app.post('/compile', async (req, res) => {
         fs.mkdirSync(folderPath); // Synchronous directory creation
         fs.writeFileSync(filePath, code); // Synchronous file writing
 
-        const compile = spawn('javac', [filePath]);
+        // const compile = spawn('javac', [filePath]);
+        const compile = spawn('javac', ['-J-Xmx128m', filePath]); // Limit Java heap size
+
         let compileError = '';
 
         compile.stderr.on('data', (data) => {
@@ -46,7 +48,9 @@ app.post('/compile', async (req, res) => {
             return res.json({ error: compileError });
         }
 
-        const run = spawn('java', ['-cp', folderPath, 'Main']); // Use -cp
+        // const run = spawn('java', ['-cp', folderPath, 'Main']); // Use -cp
+        const run = spawn('java', ['-XX:+TieredCompilation', '-XX:TieredStopAtLevel=1', '-cp', folderPath, 'Main']); // Fast execution mode
+
         let output = '';
         let runError = '';
 
