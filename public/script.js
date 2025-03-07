@@ -276,7 +276,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show/hide AI modal
     function openAiModal(title) {
         aiModalTitle.textContent = title;
-        aiModalBody.innerHTML = '<div class="ai-loading"><div class="ai-spinner"></div></div>';
+        aiModalBody.innerHTML = `<div class="bars-loader">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>`;
         aiModal.style.display = 'flex';
         document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
     }

@@ -840,3 +840,48 @@ body {
     color: var(--success-color);
     font-size: 10px;
 }
+
+.bars-loader {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 50px;
+    gap: 5px;
+}
+
+.bar {
+    width: 8px;
+    background-color: #3498db;
+    border-radius: 5px;
+    animation: bars 1.5s infinite ease-in-out;
+}
+
+.bar:nth-child(1) {
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.bar:nth-child(2) {
+    height: 30px;
+    animation-delay: 0.2s;
+}
+
+.bar:nth-child(3) {
+    height: 40px;
+    animation-delay: 0.4s;
+}
+
+.bar:nth-child(4) {
+    height: 30px;
+    animation-delay: 0.6s;
+}
+
+.bar:nth-child(5) {
+    height: 20px;
+    animation-delay: 0.8s;
+}
+
+@keyframes bars {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1); }
+}
