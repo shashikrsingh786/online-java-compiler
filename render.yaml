@@ -2,7 +2,6 @@ services:
   - type: web
     name: java-compiler
     env: docker
-    buildCommand: docker build -t java-compiler .
     startCommand: npm start
     envVars:
       - key: NODE_ENV
