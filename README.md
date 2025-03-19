@@ -146,9 +146,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Shashi Kumar Singh**
-- Website: [Your Website]
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn]
+- GitHub: (https://github.com/shashikrsingh786)
 
 ## 🙏 Acknowledgments
 
