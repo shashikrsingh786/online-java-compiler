@@ -4,9 +4,7 @@ A powerful, browser-based Java compiler with real-time code execution, AI assist
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue)](https://online-java-compiler-s2jv.onrender.com/)
 
-## 🎥 Demo Video
 
-https://github.com/yourusername/java-compiler/assets/video/demo.mp4
 
 ## ✨ Features
 
