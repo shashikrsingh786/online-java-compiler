@@ -885,3 +885,24 @@ body {
     0%, 100% { transform: scaleY(0.5); }
     50% { transform: scaleY(1); }
 }
+
+.custom-shape-divider-bottom-1741407370 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1741407370 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 106px;
+}
+
+.custom-shape-divider-bottom-1741407370 .shape-fill {
+    fill: #FFFFFF;
+}
